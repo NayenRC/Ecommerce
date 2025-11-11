@@ -13,7 +13,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(
                 new Info()
-                        .title("API demo")
+                        .title("API Ecommerce")
                         .version("0.1")
                         .description("Api de Tienda Online"));
     }
