@@ -53,7 +53,7 @@ public class UsuarioController {
     @PostMapping("/login")
     @Operation(summary = "Inicia sesión con correo y contraseña", description = "Verifica las credenciales de usuario")
     public ResponseEntity<?> login(@RequestBody Usuario usuario) {
-        Usuario login = usuarioService.login(usuario);
+        Usuario login = usuarioServicio.login(usuario);
 
         if (login != null) {
             // No devolvemos la clave por seguridad
