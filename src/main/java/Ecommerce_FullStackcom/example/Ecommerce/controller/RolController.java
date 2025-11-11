@@ -4,12 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,26 +44,5 @@ public class RolController {
         return ResponseEntity.status(201).body(creado);
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Actualiza un rol", description = "Actualiza completamente los datos de un rol")
-    public ResponseEntity<Rol> actualizar(@PathVariable Integer id, @Valid @RequestBody Rol rol) {
-        Rol actualizado = rolServicio.actualizarTodo(id, rol);
-        return (actualizado != null) ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
-    }
 
-    @PatchMapping("/{id}")
-    @Operation(summary = "Actualiza parcialmente un rol", description = "Permite editar parcialmente un rol existente")
-    public ResponseEntity<Rol> patch(@PathVariable Integer id, @RequestBody Rol rol) {
-        Rol actualizado = rolServicio.patchRol(id, rol);
-        return (actualizado != null) ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
-    }
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Elimina un rol", description = "Elimina un rol por su identificador")
-    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-        Rol rol = rolServicio.obtenerPorId(id);
-        if (rol == null) return ResponseEntity.notFound().build();
-        rolServicio.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
 }

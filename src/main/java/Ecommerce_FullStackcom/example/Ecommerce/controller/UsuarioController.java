@@ -50,6 +50,20 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(creado);
     }
 
+    @PostMapping("/login")
+    @Operation(summary = "Inicia sesión con correo y contraseña", description = "Verifica las credenciales de usuario")
+    public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+        Usuario login = usuarioService.login(usuario);
+
+        if (login != null) {
+            // No devolvemos la clave por seguridad
+            login.setClave(null);
+            return ResponseEntity.ok(login);
+        } else {
+            return ResponseEntity.status(401).body("Credenciales inválidas");
+        }
+    }
+
     @PutMapping("/{id}")
     @Operation(summary = "Actualiza un usuario", description = "Actualiza completamente los datos de un usuario existente")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Integer id, @Valid @RequestBody Usuario usuario) {
