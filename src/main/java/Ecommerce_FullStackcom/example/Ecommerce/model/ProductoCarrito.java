@@ -27,7 +27,7 @@ public class ProductoCarrito {
 
     @NotNull(message = "La cantidad de productos es obligatoria")
     @Column(nullable = false)
-    private Integer cantidadProductos;
+    private Integer cantidadProducto;
     
     @NotNull(message = "El subtotal de producto debe ser obligatorio")
     @Column(nullable = false)
