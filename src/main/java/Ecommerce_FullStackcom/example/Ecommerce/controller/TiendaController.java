@@ -61,9 +61,4 @@ public class TiendaController {
     public void deleteTienda(@PathVariable Long id) {
         tiendaService.deleteTienda(id);
     }
-
-
 }
-
-
-
