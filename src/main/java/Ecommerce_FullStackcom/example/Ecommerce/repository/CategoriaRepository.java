@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
-    List<Categoria> findByNombreCategoriaContainingIngoreCase(String nombreCategoria);
+    List<Categoria> findByNombreCategoriaContainingIgnoreCase(String nombreCategoria);
 }

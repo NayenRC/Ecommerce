@@ -10,5 +10,5 @@ import Ecommerce_FullStackcom.example.Ecommerce.model.Categorias;
 @Repository
 public interface CategoriasRepository extends JpaRepository<Categorias, Integer> {
 
-    List<Categorias> findByNombreCategoriasContainingIngoreCase(String nombreCategorias);
+    List<Categorias> findByNombreCategoriasContainingIgnoreCase(String nombreCategorias);
 }

@@ -54,6 +54,6 @@ public class CategoriaService {
     }
 
     public List<Categoria> buscarPorNombre(String nombre){
-        return categoriaRepository.findByNombreCategoriaContainingIngoreCase(nombre);
+        return categoriaRepository.findByNombreCategoriaContainingIgnoreCase(nombre);
     }
 }
