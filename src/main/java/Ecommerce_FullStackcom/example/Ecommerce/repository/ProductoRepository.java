@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
-
     List<Producto> findByNombreProductoContainingIgnoreCase(String nombreProducto);
 
     // aquí buscamos el producto por categoría omg
