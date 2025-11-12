@@ -21,6 +21,6 @@ public class Tienda {
    private String name;
    private String description;
    private String category;
-    private Double price;
+   private Double price;
 
 }
