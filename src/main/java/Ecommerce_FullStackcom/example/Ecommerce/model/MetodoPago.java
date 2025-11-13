@@ -17,15 +17,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Modelo que representa un método de pago")
-
+@Schema(description = "Modelo que representa los métodos de pago disponibles")
 public class MetodoPago {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "metodo_pago_id")
+    private Integer metodoPagoId;
 
-    @NotBlank(message = "El nombre del método de pago es obligatorio")
-    @Column(nullable = false, length = 100)
-    private String nombre;
-
+    @NotBlank(message = "El tipo de pago es obligatorio")
+    @Column(name = "tipo_pago", nullable = false, length = 50)
+    private String tipoPago;
 }

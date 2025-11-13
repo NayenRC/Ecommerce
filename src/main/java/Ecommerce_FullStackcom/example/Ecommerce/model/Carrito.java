@@ -1,5 +1,7 @@
 package Ecommerce_FullStackcom.example.Ecommerce.model;
 
+import java.time.LocalDateTime;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,24 +21,32 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Modelo que representa el carrito de compras de un usuario")
+@Schema(description = "Modelo que representa un carrito de compras del usuario")
 public class Carrito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "carrito_id")
+    private Integer carritoId;
 
-    @NotNull(message = "El usuario es obligatorio")
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-
-
-    @NotNull(message = "La tienda es obligatoria")
     private Usuario usuario;
-    @JoinColumn(name = "tienda_id", nullable = false)
-    private Tienda tienda;
 
-    @NotNull(message = "La cantidad es obligatoria")
-    @Column(nullable = false)
-    private Integer cantidad;
+    @Column(name = "fecha_creacion", nullable = false)
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "estado_id", nullable = false)
+    private Estado estado;
+
+    @ManyToOne
+    @JoinColumn(name = "metodo_pago_id")
+    private MetodoPago metodoPago;
+
+    @Column(name = "detalle_carrito", length = 500)
+    private String detalleCarrito;
+
+    @NotNull(message = "El total del carrito es obligatorio")
+    private Double total;
 }

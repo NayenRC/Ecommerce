@@ -14,19 +14,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "estado") 
+@Table(name = "estado")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Modelo que representa un estado de despacho")
-
+@Schema(description = "Modelo que representa el estado del carrito o despacho")
 public class Estado {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "estado_id")
+    private Integer estadoId;
 
     @NotBlank(message = "El nombre del estado es obligatorio")
-    @Column(nullable = false, length = 100)
-    private String nombre;
-
+    @Column(name = "nombre_estado", nullable = false, length = 50)
+    private String nombreEstado;
 }
