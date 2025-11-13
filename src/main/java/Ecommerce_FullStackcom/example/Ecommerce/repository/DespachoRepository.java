@@ -10,5 +10,6 @@ import Ecommerce_FullStackcom.example.Ecommerce.model.Usuario;
 
 @Repository
 public interface DespachoRepository  extends JpaRepository<Despacho, Integer> {
-    List<Despacho> findByUsuario(Usuario usuario);
+    List<Despacho> findByCarrito_Usuario(Usuario usuario);
+
 }
