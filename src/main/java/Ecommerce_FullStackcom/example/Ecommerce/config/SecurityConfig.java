@@ -16,17 +16,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // 🔓 LIBERAR SWAGGER
-                        .requestMatchers(
-                                "/doc/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs/**",
-                                "/v3/api-docs.yaml")
-                        .permitAll()
-                        // 🔐 EL RESTO REQUIERE AUTENTICACIÓN
-                        .anyRequest().authenticated())
-                .formLogin(form -> form.permitAll());
+                        .anyRequest().permitAll());
 
         return http.build();
     }
