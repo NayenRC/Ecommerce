@@ -24,6 +24,6 @@ public class Categorias {
     private Integer categorias_id;
 
     @NotBlank(message = "El nombre de las categorias es obligatorio")
-    @Column(length = 15, nullable = false)
+    @Column(name = "nombre_categorias", length = 15, nullable = false)
     private String nombreCategorias;
 }
