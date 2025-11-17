@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import Ecommerce_FullStackcom.example.Ecommerce.Service.RegionService;
 import Ecommerce_FullStackcom.example.Ecommerce.model.Region;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
