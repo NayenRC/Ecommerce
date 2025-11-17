@@ -37,7 +37,8 @@ public class ProductoCarrito {
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
     
-    /*@ManyToOne
+    @ManyToOne 
     @JoinColumn(name = "carrito_id", nullable = false)
-    private Carrito carrito;  esto para cuando carrito este listo */
+    private Carrito carrito;
+
 }
