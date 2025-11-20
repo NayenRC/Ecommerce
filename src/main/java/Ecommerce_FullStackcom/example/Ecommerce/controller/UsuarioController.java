@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Ecommerce_FullStackcom.example.Ecommerce.Service.UsuarioService;
+import Ecommerce_FullStackcom.example.Ecommerce.model.Rol;
 import Ecommerce_FullStackcom.example.Ecommerce.model.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,12 @@ public class UsuarioController {
     @PostMapping
     @Operation(summary = "Crea un nuevo usuario", description = "Registra un nuevo usuario en la base de datos")
     public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
+
+        // ASIGNAR ROL POR DEFECTO
+        Rol rolUsuario = new Rol();
+        rolUsuario.setRol_id(2); 
+        usuario.setRol(rolUsuario);
+
         Usuario creado = usuarioServicio.guardar(usuario);
         return ResponseEntity.status(201).body(creado);
     }
@@ -56,7 +63,6 @@ public class UsuarioController {
         Usuario login = usuarioServicio.login(usuario);
 
         if (login != null) {
-            // No devolvemos la clave por seguridad
             login.setClave(null);
             return ResponseEntity.ok(login);
         } else {
