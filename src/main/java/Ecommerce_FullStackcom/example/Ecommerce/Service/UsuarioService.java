@@ -10,7 +10,6 @@ import Ecommerce_FullStackcom.example.Ecommerce.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Service
 @Transactional
 public class UsuarioService {
@@ -30,6 +29,8 @@ public class UsuarioService {
     }
 
     public Usuario guardar(Usuario usuario) {
+        // Encriptar la contraseña ANTES de guardar
+        usuario.setClave(passwordEncoder.encode(usuario.getClave()));
         return usuarioRepository.save(usuario);
     }
 
@@ -82,5 +83,5 @@ public class UsuarioService {
         }
         return null;
     }
-    
+
 }
