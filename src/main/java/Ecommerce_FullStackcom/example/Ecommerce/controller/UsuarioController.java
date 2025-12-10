@@ -18,8 +18,6 @@ import Ecommerce_FullStackcom.example.Ecommerce.dto.LoginResponse;
 import Ecommerce_FullStackcom.example.Ecommerce.model.Rol;
 import Ecommerce_FullStackcom.example.Ecommerce.model.Usuario;
 import Ecommerce_FullStackcom.example.Ecommerce.security.JwtUtil;
-import Ecommerce_FullStackcom.example.Ecommerce.security.JwtUtil;
-import Ecommerce_FullStackcom.example.Ecommerce.dto.LoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
@@ -29,8 +27,10 @@ import jakarta.validation.Valid;
 public class UsuarioController {
 
     @Autowired
-    private JwtUtil jwtUtil;
     private UsuarioService usuarioServicio;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping
     @Operation(summary = "Obtiene todos los usuarios", description = "Lista todos los usuarios registrados")
@@ -53,7 +53,6 @@ public class UsuarioController {
     @Operation(summary = "Crea un nuevo usuario", description = "Registra un nuevo usuario en la base de datos")
     public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
 
-        // ASIGNAR ROL POR DEFECTO
         Rol rolUsuario = new Rol();
         rolUsuario.setRol_id(2);
         usuario.setRol(rolUsuario);
@@ -72,10 +71,8 @@ public class UsuarioController {
             // Generar token JWT
             String token = jwtUtil.generateToken(login.getCorreoElectronico());
 
-            // No devolver la contraseña
             login.setClave(null);
 
-            // Crear respuesta con token + usuario
             LoginResponse response = new LoginResponse(token, login);
 
             return ResponseEntity.ok(response);
@@ -85,21 +82,18 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualiza un usuario", description = "Actualiza completamente los datos de un usuario existente")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Integer id, @Valid @RequestBody Usuario usuario) {
         Usuario actualizado = usuarioServicio.actualizarTodo(id, usuario);
         return (actualizado != null) ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "Actualiza parcialmente un usuario", description = "Permite modificar parcialmente los datos de un usuario")
     public ResponseEntity<Usuario> patchUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
         Usuario actualizado = usuarioServicio.patchUsuario(id, usuario);
         return (actualizado != null) ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Elimina un usuario", description = "Elimina un usuario existente por su ID")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id) {
         Usuario usuario = usuarioServicio.obtenerPorId(id);
         if (usuario == null) {
