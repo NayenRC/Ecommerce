@@ -2,28 +2,32 @@ package Ecommerce_FullStackcom.example.Ecommerce.security;
 
 import java.util.Date;
 
+import javax.crypto.SecretKey;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "12345678901234567890123456789012"; // 32 chars
-    private final long EXPIRATION_TIME = 86400000; // 24 horas
+    private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("12345678901234567890123456789012".getBytes());
+    private final long EXPIRATION_TIME = 86400000; // 24h
 
     public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, SECRET)
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String getEmailFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET)
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
