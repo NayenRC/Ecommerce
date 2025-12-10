@@ -1,6 +1,7 @@
 package Ecommerce_FullStackcom.example.Ecommerce.security;
 
 import java.util.Date;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "CLAVE_SECRETA_SUPER_SEGURA";
+    private final String SECRET = "12345678901234567890123456789012"; // 32 chars
     private final long EXPIRATION_TIME = 86400000; // 24 horas
 
     public String generateToken(String email) {
