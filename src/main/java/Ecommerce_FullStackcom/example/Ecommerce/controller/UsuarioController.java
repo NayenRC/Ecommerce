@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Ecommerce_FullStackcom.example.Ecommerce.Service.UsuarioService;
+import Ecommerce_FullStackcom.example.Ecommerce.dto.LoginResponse;
 import Ecommerce_FullStackcom.example.Ecommerce.model.Rol;
 import Ecommerce_FullStackcom.example.Ecommerce.model.Usuario;
+import Ecommerce_FullStackcom.example.Ecommerce.security.JwtUtil;
+import Ecommerce_FullStackcom.example.Ecommerce.security.JwtUtil;
+import Ecommerce_FullStackcom.example.Ecommerce.dto.LoginResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
@@ -25,6 +29,7 @@ import jakarta.validation.Valid;
 public class UsuarioController {
 
     @Autowired
+    private JwtUtil jwtUtil;
     private UsuarioService usuarioServicio;
 
     @GetMapping
@@ -50,7 +55,7 @@ public class UsuarioController {
 
         // ASIGNAR ROL POR DEFECTO
         Rol rolUsuario = new Rol();
-        rolUsuario.setRol_id(2); 
+        rolUsuario.setRol_id(2);
         usuario.setRol(rolUsuario);
 
         Usuario creado = usuarioServicio.guardar(usuario);
@@ -58,16 +63,25 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Inicia sesión con correo y contraseña", description = "Verifica las credenciales de usuario")
     public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+
         Usuario login = usuarioServicio.login(usuario);
 
         if (login != null) {
+
+            // Generar token JWT
+            String token = jwtUtil.generateToken(login.getCorreoElectronico());
+
+            // No devolver la contraseña
             login.setClave(null);
-            return ResponseEntity.ok(login);
-        } else {
-            return ResponseEntity.status(401).body("Credenciales inválidas");
+
+            // Crear respuesta con token + usuario
+            LoginResponse response = new LoginResponse(token, login);
+
+            return ResponseEntity.ok(response);
         }
+
+        return ResponseEntity.status(401).body("Credenciales inválidas");
     }
 
     @PutMapping("/{id}")
